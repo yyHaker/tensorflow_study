@@ -76,6 +76,7 @@ sv = tf.train.Supervisor(logdir=train_log,
                          global_step=model.global_step,
                          summary_op=None)
 
+
 summary_writer = sv.summary_writer
 
 try:
