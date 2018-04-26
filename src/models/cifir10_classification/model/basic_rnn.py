@@ -11,7 +11,7 @@ from layer.pool_layer import PoolLayer
 
 
 class ConvNet(object):
-    """the basic cnn models"""
+    """thpipe basic cnn models"""
     def __init__(self, n_channel=3, n_classes=10, image_size=24):
         # input variable
         self.images = tf.placeholder(dtype=tf.float32, shape=[None, image_size, image_size, n_channel],
