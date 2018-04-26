@@ -2,6 +2,10 @@
 """
 write a custom estimator with four features, two hidden layers,
 and a logits output layer.
+TODO:
+1. 理解Estimator在不同的mode之间是怎么权衡的,每隔多久Evaluate,每隔多久Test?
+2. 理解feature_column的作用以及用法
+3. (个人真是觉得官网教程有点坑，到底在说什么啊？)
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -54,6 +58,10 @@ def my_model_fn(
                                    name='acc_op')
     metrics = {'accuracy': accuracy}
     tf.summary.scalar('accuracy', accuracy[1])
+
+    # visualizing a computation graph
+    writer = tf.summary.FileWriter('logdir')
+    writer.add_graph(tf.get_default_graph())
 
     if mode == tf.estimator.ModeKeys.EVAL:
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss,
