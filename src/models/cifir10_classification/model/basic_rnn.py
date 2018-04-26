@@ -88,6 +88,7 @@ class ConvNet(object):
             print("create backup directory....")
         print("open the session.........")
         # build the session
+        # 设置每个GPU应该拿出多少容量给进程使用
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.45)
         self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
         # model saver
@@ -100,7 +101,6 @@ class ConvNet(object):
         print("begin training........")
         for epoch in range(0, n_epoch+1):
             # load data and data augmentation
-            print("load data and data augmentation")
             train_images = dataloader.data_augmentation(dataloader.train_images, mode='train',
                                                         flip=True, crop=True, crop_shape=(24, 24, 3), whiten=True,
                                                         noise=False)
@@ -109,8 +109,7 @@ class ConvNet(object):
                                                         flip=False, crop=True, crop_shape=(24, 24, 3), whiten=True,
                                                         noise=False)
             valid_labels = dataloader.valid_labels
-
-            print("training.......")
+            # print("compute train loss....")
             train_loss = 0.0
             for i in range(0, dataloader.n_train, batch_size):
                 batch_images = train_images[i: i+batch_size]
@@ -123,7 +122,7 @@ class ConvNet(object):
             train_loss = 1.0 * train_loss / dataloader.n_train
 
             # get the loss and accuracy of the valid dataset
-            print("get the loss and accuracy of the valid dataset......")
+            # print("get the loss and accuracy of the valid dataset on epoch %d......" % epoch)
             valid_accuracy, valid_loss = 0.0, 0.0
             for i in range(0, dataloader.n_valid, batch_size):
                 batch_images = valid_images[i: i+batch_size]
@@ -151,6 +150,7 @@ class ConvNet(object):
         self.sess.close()
 
     def test(self, dataloader, backup_path, epoch, batch_size=128):
+        # 设置每个GPU应该拿出多少容量给进程使用
         gpu_options = tf.GPUOptions(per_process_gpu_memery=0.25)
         self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
         # load the model
