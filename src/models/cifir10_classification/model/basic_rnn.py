@@ -80,21 +80,27 @@ class ConvNet(object):
         correct_prediction = tf.equal(self.labels, tf.argmax(logits, axis=1))
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, dtype='float'))
 
+        print('Build the network done....')
+
     def train(self, dataloader, backup_path, n_epoch=5, batch_size=128):
+        if not os.path.exists(backup_path):
+            os.makedirs(backup_path)
+            print("create backup directory....")
+        print("open the session.........")
         # build the session
-        # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.45)
-        # self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-        self.sess = tf.Session()
+        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.45)
+        self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
         # model saver
-        # self.saver = tf.train.Saver(var_list=tf.global_variables(), write_version=tf.train.SaverDef.V2,
-                                   # max_to_keep=10)
-        self.saver = tf.train.Saver()
+        self.saver = tf.train.Saver(var_list=tf.global_variables(), write_version=tf.train.SaverDef.V2,
+                                    max_to_keep=10)
         # model initialize
         self.sess.run(tf.global_variables_initializer())
 
         # training
+        print("begin training........")
         for epoch in range(0, n_epoch+1):
             # load data and data augmentation
+            print("load data and data augmentation")
             train_images = dataloader.data_augmentation(dataloader.train_images, mode='train',
                                                         flip=True, crop=True, crop_shape=(24, 24, 3), whiten=True,
                                                         noise=False)
@@ -104,18 +110,20 @@ class ConvNet(object):
                                                         noise=False)
             valid_labels = dataloader.valid_labels
 
+            print("training.......")
             train_loss = 0.0
             for i in range(0, dataloader.n_train, batch_size):
                 batch_images = train_images[i: i+batch_size]
                 batch_labels = train_labels[i: i+batch_size]
                 [_, avg_loss, iteration] = self.sess.run(fetches=[self.optimizer, self.avg_loss, self.global_step],
-                                   feed_dict={self.images: batch_images,
-                                              self.labels: batch_labels,
-                                              self.keep_prob: 0.5})
+                                                         feed_dict={self.images: batch_images,
+                                                                    self.labels: batch_labels,
+                                                                    self.keep_prob: 0.5})
                 train_loss += avg_loss * batch_images.shape[0]   # self.avg_loss计算的不是一个batch的损失吗?
             train_loss = 1.0 * train_loss / dataloader.n_train
 
             # get the loss and accuracy of the valid dataset
+            print("get the loss and accuracy of the valid dataset......")
             valid_accuracy, valid_loss = 0.0, 0.0
             for i in range(0, dataloader.n_valid, batch_size):
                 batch_images = valid_images[i: i+batch_size]

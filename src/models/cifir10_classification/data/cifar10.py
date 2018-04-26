@@ -41,6 +41,7 @@ class Corpus:
         images = numpy.array(images, dtype='float')
         labels = numpy.array(labels, dtype='int')
         self.train_images, self.train_labels = images, labels
+        print("load train image %d" % self.train_images.shape[0])
         # 读取测试集
         images, labels = [], []
         for filename in ['%s/test_batch' % (directory)]:
@@ -58,6 +59,7 @@ class Corpus:
         images = numpy.array(images, dtype='float')
         labels = numpy.array(labels, dtype='int')
         self.test_images, self.test_labels = images, labels
+        print("load test image %d" % self.test_images.shape[0])
 
     def data_augmentation(self, images, mode='train', flip=False,
                           crop=False, crop_shape=(24, 24, 3), whiten=False,
