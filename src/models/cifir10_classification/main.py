@@ -56,8 +56,11 @@ def run():
 
     logger = logging.getLogger("image classification")
     logger.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s')
-    if args.log_path:  # logging 不会自己创建目录，但是会自己创建爱你文件
+    formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s-%(message)s')
+    if args.log_path:  # logging 不会自己创建目录，但是会自己创建文件
+        log_dir = os.path.dirname(args.log_path)
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
         file_handler = logging.FileHandler(args.log_path)
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(formatter)
