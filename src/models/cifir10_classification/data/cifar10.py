@@ -5,11 +5,13 @@ import random
 import matplotlib.pyplot as plt
 import platform
 import cv2
+import logging
 
 
 class Corpus:
 
     def __init__(self):
+        self.logger = logging.getLogger("image classification")
         self.load_cifar10('data/CIFAR10_data')
         self._split_train_valid(valid_rate=0.9)
         self.n_train = self.train_images.shape[0]
@@ -26,7 +28,7 @@ class Corpus:
         # 读取训练集
         images, labels = [], []
         for filename in ['%s/data_batch_%d' % (directory, j) for j in range(1, 6)]:
-            print(filename)
+            self.logger.info("read files {}".format(filename))
             with open(filename, 'rb') as fo:
                 if 'Windows' in platform.platform():
                     cifar10 = pickle.load(fo, encoding='bytes')
@@ -41,7 +43,7 @@ class Corpus:
         images = numpy.array(images, dtype='float')
         labels = numpy.array(labels, dtype='int')
         self.train_images, self.train_labels = images, labels
-        print("load train image %d" % self.train_images.shape[0])
+        self.logger.info("load train image %d" % self.train_images.shape[0])
         # 读取测试集
         images, labels = [], []
         for filename in ['%s/test_batch' % (directory)]:
@@ -59,7 +61,7 @@ class Corpus:
         images = numpy.array(images, dtype='float')
         labels = numpy.array(labels, dtype='int')
         self.test_images, self.test_labels = images, labels
-        print("load test image %d" % self.test_images.shape[0])
+        self.logger.info("load test image %d" % self.test_images.shape[0])
 
     def data_augmentation(self, images, mode='train', flip=False,
                           crop=False, crop_shape=(24, 24, 3), whiten=False,

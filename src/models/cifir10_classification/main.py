@@ -16,8 +16,11 @@ def parse_args():
 
     train_settings = parse.add_argument_group("train settings")
     train_settings.add_argument("--optim", default="adam", help='optimizer type')
-    train_settings.add_argument("--learning_rate", type=float, default=0.001)
-    train_settings.add_argument("--weight_decay", type=float, default=0, help="weight decay")
+    train_settings.add_argument("--learning_rate", type=float, default=0.001, help="learning rate")
+    train_settings.add_argument("--adjust_learning_rate", type=bool, default=True, help="if adjust learning rate")
+    train_settings.add_argument("--weight_decay", type=float, default=1e-4, help="weight decay")
+    train_settings.add_argument("--batch_normal", type=bool, default=True, help="if use batch normalization")
+    train_settings.add_argument("--resp_normal", type=bool, default=True, help="if use local resp_normal")
     train_settings.add_argument("--dropout_keep_prob", type=float, default=0.5, help='dropout keep prob')
     train_settings.add_argument("--batch_size", type=int, default=128, help='train batch size')
     train_settings.add_argument("--epochs", type=int, default=10, help='train epochs')
@@ -29,7 +32,7 @@ def parse_args():
 
     path_settings = parse.add_argument_group("path settings")
     path_settings.add_argument("--backup_path", default="backup/cifar10-v14/", help="the model saved directory")
-    path_settings.add_argument("--log_path", default="backup/logs/logs.log", help="path to log the file...")
+    path_settings.add_argument("--log_path", default="backup/logs/train.log", help="path to log the file...")
 
     return parse.parse_args()
 
@@ -40,10 +43,10 @@ def train(args):
     logger.info("get the image data.....")
     cifar10 = Corpus()
     logging.info("initialize the model...")
-    convnet = ConvNet(n_channel=3, n_classes=10, image_size=24)
+    convnet = ConvNet(args)
     logging.info("training the model....")
-    convnet.train(dataloader=cifar10, backup_path='backup/cifar10-v14/',
-                  batch_size=128, n_epoch=500)
+    convnet.train(dataloader=cifar10, backup_path=args.backup_path,
+                  batch_size=args.batch_size, n_epoch=args.epochs)
     logging.info("done with the training!")
 
 
@@ -53,8 +56,8 @@ def run():
 
     logger = logging.getLogger("image classification")
     logger.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if args.log_path:
+    formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s')
+    if args.log_path:  # logging 不会自己创建目录，但是会自己创建爱你文件
         file_handler = logging.FileHandler(args.log_path)
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(formatter)
@@ -68,5 +71,10 @@ def run():
     logging.info("Running with args: {}".format(args))
     if args.train:
         train(args)
+
+
+if __name__ == "__main__":
+    run()
+
 
 
