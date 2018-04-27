@@ -133,11 +133,11 @@ class ConvNet(object):
         for epoch in range(0, n_epoch+1):
             # load data and data augmentation
             train_images = dataloader.data_augmentation(dataloader.train_images, mode='train',
-                                                        flip=True, crop=True, crop_shape=(24, 24, 3), whiten=True,
+                                                        flip=True, crop=True, crop_shape=(32, 32, 3), whiten=True,
                                                         noise=False)
             train_labels = dataloader.train_labels
             valid_images = dataloader.data_augmentation(dataloader.valid_images, mode='test',
-                                                        flip=False, crop=True, crop_shape=(24, 24, 3), whiten=True,
+                                                        flip=False, crop=True, crop_shape=(32, 32, 3), whiten=True,
                                                         noise=False)
             valid_labels = dataloader.valid_labels
             # print("compute train loss....")

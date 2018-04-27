@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from data.cifar10 import Corpus
+from data.DataImage import DataImage
 
 from model.basic_rnn import ConvNet
 
@@ -27,8 +28,8 @@ def parse_args():
 
     model_settings = parse.add_argument_group("model settings")
     model_settings.add_argument("--n_channels", type=int, default=3, help="the image input channels")
-    model_settings.add_argument("--n_classes", type=int, default=10, help="the image classes")
-    model_settings.add_argument("--image_size", type=int, default=24, help="the image size")
+    model_settings.add_argument("--n_classes", type=int, default=20, help="the image classes")
+    model_settings.add_argument("--image_size", type=int, default=32, help="the image size")
 
     path_settings = parse.add_argument_group("path settings")
     path_settings.add_argument("--backup_path", default="backup/cifar10-v14/", help="the model saved directory")
@@ -41,11 +42,12 @@ def train(args):
     """train the classification model"""
     logger = logging.getLogger("image classification")
     logger.info("get the image data.....")
-    cifar10 = Corpus()
+    # cifar10 = Corpus()
+    data_image = DataImage()
     logger.info("initialize the model...")
     convnet = ConvNet(args)
     logger.info("training the model....")
-    convnet.train(dataloader=cifar10, backup_path=args.backup_path,
+    convnet.train(dataloader=data_image, backup_path=args.backup_path,
                   batch_size=args.batch_size, n_epoch=args.epochs)
     logger.info("done with the training!")
 
