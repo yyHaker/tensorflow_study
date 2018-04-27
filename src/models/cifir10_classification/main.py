@@ -42,12 +42,12 @@ def train(args):
     logger = logging.getLogger("image classification")
     logger.info("get the image data.....")
     cifar10 = Corpus()
-    logging.info("initialize the model...")
+    logger.info("initialize the model...")
     convnet = ConvNet(args)
-    logging.info("training the model....")
+    logger.info("training the model....")
     convnet.train(dataloader=cifar10, backup_path=args.backup_path,
                   batch_size=args.batch_size, n_epoch=args.epochs)
-    logging.info("done with the training!")
+    logger.info("done with the training!")
 
 
 def run():
@@ -71,7 +71,7 @@ def run():
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-    logging.info("Running with args: {}".format(args))
+    logger.info("Running with args: {}".format(args))
     if args.train:
         train(args)
 
