@@ -33,9 +33,9 @@ class ConvNet(object):
         self.epochs = args.epochs
 
         # input variable
-        self.images = tf.placeholder(dtype=tf.float32, shape=[None, self.image_size,
-                                                              self.image_size, self.n_channels], name='images')
-        self.labels = tf.placeholder(dtype=tf.int64, shape=[None], name='labels')
+        self.images = tf.placeholder(dtype=tf.uint8, shape=[None, self.image_size,
+                                                            self.image_size, self.n_channels], name='images')
+        self.labels = tf.placeholder(dtype=tf.int8, shape=[None], name='labels')
         self.keep_prob = tf.placeholder(dtype=tf.float32, name='keep_prob')
 
         self.global_step = tf.Variable(initial_value=0, dtype=tf.int32, name='global_step')
