@@ -89,7 +89,7 @@ class DataImage(object):
         self.logger.info("read images....")
         images_labels = []
         count = 0
-        for filename in os.listdir(images_dir):
+        for filename in os.listdir(images_dir)[:3000]:
             img = cv2.imread(os.path.join(images_dir, filename))
             real = cv2.resize(img, (self.image_width, self.image_height))  # numpy array
             count += 1
