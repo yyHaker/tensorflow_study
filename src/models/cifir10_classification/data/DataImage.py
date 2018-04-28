@@ -123,11 +123,12 @@ class DataImage(object):
         for img, lbl in self.images_labels[thresh:]:
             self.valid_images.append(img)
             self.valid_labels.append(lbl)
+        # free memory
         del self.images_labels
         self.train_images, self.train_labels = np.array(self.train_images
-                                                        , dtype=float), np.array(self.train_labels, dtype=int)
+                                                        , dtype=np.uint8), np.array(self.train_labels, dtype=int)
         self.valid_images, self.valid_labels = np.array(self.valid_images
-                                                        ,dtype=float), np.array(self.valid_labels, dtype=int)
+                                                        , dtype=np.uint8), np.array(self.valid_labels, dtype=int)
         self.logger.info("split data result: train images{}, valid images: {}".format(
             self.train_images.shape[0], self.valid_images.shape[0]))
 
