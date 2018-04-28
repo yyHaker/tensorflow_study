@@ -58,7 +58,7 @@ class DataImage(object):
         :return:
         """
         self.logger.info("build id_to_class and class_to_id vocab....")
-        categories_csv = csv.reader(open(categories_path, 'r'))
+        categories_csv = csv.reader(open(categories_path, 'r', encoding='utf-8'))
         id_to_class = {}
         class_to_id = {}
         for c in categories_csv:
