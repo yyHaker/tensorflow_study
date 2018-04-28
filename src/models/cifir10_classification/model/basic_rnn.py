@@ -72,7 +72,7 @@ class ConvNet(object):
         hidden_conv3 = conv_layer3.get_output(input=hidden_pool2)
         hidden_pool3 = pool_layer3.get_output(hidden_conv3)
 
-        input_dense1 = tf.reshape(hidden_pool3, shape=[-1, int(self.image_size/8)*int(self.image_size/8)*256])
+        input_dense1 = tf.reshape(hidden_pool3, shape=[-1, int(self.image_size/64)*int(self.image_size/64)*256])
         output_dense1 = dense_layer1.get_output(input=input_dense1)
         logits = dense_layer2.get_output(input=output_dense1)
 
