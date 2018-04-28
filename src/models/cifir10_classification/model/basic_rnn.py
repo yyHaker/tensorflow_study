@@ -57,10 +57,10 @@ class ConvNet(object):
         pool_layer3 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool3')
 
         dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/8)*int(self.image_size/8)*256),
-                                  hidden_dim=1024, activation='relu', dropout=True, keep_prob=self.keep_prob,
+                                  hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense1')
 
-        dense_layer2 = DenseLayer(input_shape=(None, 1024),
+        dense_layer2 = DenseLayer(input_shape=(None, 4096),
                                   hidden_dim=self.n_classes, activation='none', dropout=False, keep_prob=None,
                                   batch_normal=False, weight_decay=self.weight_decay, name='dense2')
 
@@ -133,11 +133,11 @@ class ConvNet(object):
         for epoch in range(0, n_epoch+1):
             # load data and data augmentation
             train_images = dataloader.data_augmentation(dataloader.train_images, mode='train',
-                                                        flip=True, crop=True, crop_shape=(32, 32, 3), whiten=True,
+                                                        flip=False, crop=False, whiten=False,
                                                         noise=False)
             train_labels = dataloader.train_labels
             valid_images = dataloader.data_augmentation(dataloader.valid_images, mode='test',
-                                                        flip=False, crop=True, crop_shape=(32, 32, 3), whiten=True,
+                                                        flip=False, crop=False, whiten=False,
                                                         noise=False)
             valid_labels = dataloader.valid_labels
             # print("compute train loss....")

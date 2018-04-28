@@ -66,6 +66,19 @@ class Corpus:
     def data_augmentation(self, images, mode='train', flip=False,
                           crop=False, crop_shape=(24, 24, 3), whiten=False,
                           noise=False, noise_mean=0, noise_std=0.01):
+        """
+        data augmentation
+        :param images:
+        :param mode:
+        :param flip:
+        :param crop: if crop the image
+        :param crop_shape:
+        :param whiten:
+        :param noise:
+        :param noise_mean:
+        :param noise_std:
+        :return:
+        """
         # 图像切割
         if crop:
             if mode == 'train':

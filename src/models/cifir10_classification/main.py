@@ -29,7 +29,7 @@ def parse_args():
     model_settings = parse.add_argument_group("model settings")
     model_settings.add_argument("--n_channels", type=int, default=3, help="the image input channels")
     model_settings.add_argument("--n_classes", type=int, default=20, help="the image classes")
-    model_settings.add_argument("--image_size", type=int, default=32, help="the image size")
+    model_settings.add_argument("--image_size", type=int, default=768, help="the image size")
 
     path_settings = parse.add_argument_group("path settings")
     path_settings.add_argument("--backup_path", default="backup/cifar10-v14/", help="the model saved directory")
