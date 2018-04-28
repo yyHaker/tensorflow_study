@@ -23,8 +23,8 @@ def parse_args():
     train_settings.add_argument("--batch_normal", type=bool, default=True, help="if use batch normalization")
     train_settings.add_argument("--resp_normal", type=bool, default=True, help="if use local resp_normal")
     train_settings.add_argument("--dropout_keep_prob", type=float, default=0.5, help='dropout keep prob')
-    train_settings.add_argument("--batch_size", type=int, default=16, help='train batch size')
-    train_settings.add_argument("--epochs", type=int, default=10, help='train epochs')
+    train_settings.add_argument("--batch_size", type=int, default=4, help='train batch size')
+    train_settings.add_argument("--epochs", type=int, default=100, help='train epochs')
 
     model_settings = parse.add_argument_group("model settings")
     model_settings.add_argument("--n_channels", type=int, default=3, help="the image input channels")

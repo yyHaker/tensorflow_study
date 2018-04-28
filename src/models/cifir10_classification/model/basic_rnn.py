@@ -139,6 +139,7 @@ class ConvNet(object):
         best_dev_accuracy = 0.0
         for epoch in range(0, n_epoch+1):
             # load data and data augmentation
+            self.logger.info("begin data augmentation.....")
             train_images = dataloader.data_augmentation(dataloader.train_images, mode='train',
                                                         flip=False, crop=False, whiten=False,
                                                         noise=False)
@@ -147,6 +148,7 @@ class ConvNet(object):
                                                         flip=False, crop=False, whiten=False,
                                                         noise=False)
             valid_labels = dataloader.valid_labels
+            self.logger.info("data augmentation done.")
             # print("compute train loss....")
             train_loss = 0.0
             for i in range(0, dataloader.n_train, batch_size):
