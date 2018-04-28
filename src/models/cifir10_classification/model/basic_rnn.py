@@ -44,19 +44,19 @@ class ConvNet(object):
         conv_layer1 = ConvLayer(input_shape=(None, self.image_size, self.image_size, self.n_channels),
                                 n_size=3, n_filters=64, stride=1, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv1')
-        pool_layer1 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool1')
+        pool_layer1 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool1')
 
-        conv_layer2 = ConvLayer(input_shape=(None, int(self.image_size/2), int(self.image_size/2), 64),
+        conv_layer2 = ConvLayer(input_shape=(None, int(self.image_size/4), int(self.image_size/4), 64),
                                 n_size=3, n_filters=128, stride=1, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv2')
-        pool_layer2 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool2')
+        pool_layer2 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool2')
 
-        conv_layer3 = ConvLayer(input_shape=(None, int(self.image_size/4), int(self.image_size/2), 128),
+        conv_layer3 = ConvLayer(input_shape=(None, int(self.image_size/16), int(self.image_size/16), 128),
                                 n_size=3, n_filters=256, stride=1, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv3')
-        pool_layer3 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool3')
+        pool_layer3 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool3')
 
-        dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/8)*int(self.image_size/8)*256),
+        dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/64)*int(self.image_size/64)*256),
                                   hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense1')
 
