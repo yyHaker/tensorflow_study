@@ -6,8 +6,8 @@ from tensorflow.contrib.crf import viterbi_decode
 from tensorflow.contrib.layers.python.layers import initializers
 
 import rnncell as rnn
-from utils import result_to_json
-from data_utils import create_input, iobes_iob
+from model.utils import result_to_json
+from data_utils import iobes_iob
 
 
 class Model(object):

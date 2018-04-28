@@ -119,8 +119,8 @@ class ConvNet(object):
         self.logger.info("open the session.........")
         # build the session
         # 设置每个GPU应该拿出多少容量给进程使用
-        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.45)
-        self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+        # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.45)
+        self.sess = tf.Session(config=tf.ConfigProto())
         # model saver
         self.saver = tf.train.Saver(var_list=tf.global_variables(), write_version=tf.train.SaverDef.V2,
                                     max_to_keep=10)
