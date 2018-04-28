@@ -56,11 +56,16 @@ class ConvNet(object):
                                 weight_decay=self.weight_decay, name='conv3')
         pool_layer3 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool3')
 
-        dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/64)*int(self.image_size/64)*256),
-                                  hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
+        conv_layer4 = ConvLayer(input_shape=(None, int(self.image_size / 64), int(self.image_size / 64), 256),
+                                n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv4')
+        pool_layer4 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool4')
+
+        dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/256)*int(self.image_size/256)*512),
+                                  hidden_dim=1024, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense1')
 
-        dense_layer2 = DenseLayer(input_shape=(None, 4096),
+        dense_layer2 = DenseLayer(input_shape=(None, 1024),
                                   hidden_dim=self.n_classes, activation='none', dropout=False, keep_prob=None,
                                   batch_normal=False, weight_decay=self.weight_decay, name='dense2')
 
@@ -70,9 +75,11 @@ class ConvNet(object):
         hidden_conv2 = conv_layer2.get_output(input=hidden_pool1)
         hidden_pool2 = pool_layer2.get_output(input=hidden_conv2)
         hidden_conv3 = conv_layer3.get_output(input=hidden_pool2)
-        hidden_pool3 = pool_layer3.get_output(hidden_conv3)
+        hidden_pool3 = pool_layer3.get_output(input=hidden_conv3)
+        hidden_conv4 = conv_layer4.get_output(input=hidden_pool3)
+        hidden_pool4 = pool_layer4.get_output(input=hidden_conv4)
 
-        input_dense1 = tf.reshape(hidden_pool3, shape=[-1, int(self.image_size/64)*int(self.image_size/64)*256])
+        input_dense1 = tf.reshape(hidden_pool4, shape=[-1, int(self.image_size/256)*int(self.image_size/256)*512])
         output_dense1 = dense_layer1.get_output(input=input_dense1)
         logits = dense_layer2.get_output(input=output_dense1)
 
