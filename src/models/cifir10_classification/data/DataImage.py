@@ -22,7 +22,6 @@ class DataImage(object):
     self.class_to_id:
     self.id_to_class:
     self.imgname_to_classid:
-
     """
     def __init__(self, image_width=768, image_height=768, images_dir='data/image_scene_data/data',
                  labels_path='data/image_scene_data/list.csv',
@@ -112,19 +111,19 @@ class DataImage(object):
         self.images_labels = np.array(images_labels)
 
     def _split_train_valid(self, valid_rate=0.9):
-        images_labels = self.images_labels
         # shuffle
-        np.random.shuffle(images_labels)
+        np.random.shuffle(self.images_labels)
         # split the data
         thresh = int(valid_rate * self.images_labels.shape[0])
         self.train_images, self.train_labels = [], []
         self.valid_images, self.valid_labels = [], []
-        for img, lbl in images_labels[: thresh]:
+        for img, lbl in self.images_labels[: thresh]:
             self.train_images.append(img)
             self.train_labels.append(lbl)
-        for img, lbl in images_labels[thresh:]:
+        for img, lbl in self.images_labels[thresh:]:
             self.valid_images.append(img)
             self.valid_labels.append(lbl)
+        del self.images_labels
         self.train_images, self.train_labels = np.array(self.train_images
                                                         , dtype=float), np.array(self.train_labels, dtype=int)
         self.valid_images, self.valid_labels = np.array(self.valid_images
