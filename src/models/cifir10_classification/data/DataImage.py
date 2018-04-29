@@ -23,7 +23,7 @@ class DataImage(object):
     self.id_to_class:
     self.imgname_to_classid:
     """
-    def __init__(self, image_width=768, image_height=768, images_dir='data/image_scene_data/data',
+    def __init__(self, image_width=224, image_height=224, images_dir='data/image_scene_data/data',
                  labels_path='data/image_scene_data/list.csv',
                  categories_path='data/image_scene_data/categories.csv'):
         # resize the image to what size
@@ -100,9 +100,9 @@ class DataImage(object):
             class_id = self.imgname_to_classid[image_name]
             label_name = self.id_to_class[class_id]
             images_labels.append((real, class_id))
-            # cv2.namedWindow(label_name)
-            # cv2.imshow(label_name, real)
-            # cv2.waitKey(0)
+            cv2.namedWindow(label_name)
+            cv2.imshow(label_name, real)
+            cv2.waitKey(0)
             if count % 5 == 0:
                 cv2.destroyAllWindows()
         cv2.destroyAllWindows()
@@ -234,6 +234,7 @@ if __name__ == "__main__":
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
-    image_data = DataImage(images_dir='image_scene_data/data',
+    image_data = DataImage(image_width=224, image_height=224,
+                           images_dir='image_scene_data/data',
                            labels_path='image_scene_data/list.csv',
                            categories_path='image_scene_data/categories.csv')

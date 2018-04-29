@@ -42,46 +42,106 @@ class ConvNet(object):
 
         # Network
         conv_layer1 = ConvLayer(input_shape=(None, self.image_size, self.image_size, self.n_channels),
-                                n_size=3, n_filters=64, stride=1, activation='relu', batch_normal=self.batch_normal,
+                                n_size=3, n_filters=64, stride=2, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv1')
-        pool_layer1 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool1')
-
-        conv_layer2 = ConvLayer(input_shape=(None, int(self.image_size/4), int(self.image_size/4), 64),
-                                n_size=3, n_filters=128, stride=1, activation='relu', batch_normal=self.batch_normal,
+        conv_layer2 = ConvLayer(input_shape=(None, self.image_size, self.image_size, 64),
+                                n_size=3, n_filters=64, stride=2, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv2')
-        pool_layer2 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool2')
+        pool_layer1 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool1')
 
-        conv_layer3 = ConvLayer(input_shape=(None, int(self.image_size/16), int(self.image_size/16), 128),
-                                n_size=3, n_filters=256, stride=1, activation='relu', batch_normal=self.batch_normal,
+        conv_layer3 = ConvLayer(input_shape=(None, int(self.image_size/2), int(self.image_size/2), 64),
+                                n_size=3, n_filters=128, stride=2, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv3')
-        pool_layer3 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool3')
-
-        conv_layer4 = ConvLayer(input_shape=(None, int(self.image_size / 64), int(self.image_size / 64), 256),
-                                n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
+        conv_layer4 = ConvLayer(input_shape=(None, int(self.image_size / 2), int(self.image_size / 2), 128),
+                                n_size=3, n_filters=128, stride=2, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv4')
-        pool_layer4 = PoolLayer(n_size=4, stride=4, mode='max', resp_normal=self.resp_normal, name='pool4')
+        pool_layer2 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool2')
 
-        dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/256)*int(self.image_size/256)*512),
-                                  hidden_dim=1024, activation='relu', dropout=True, keep_prob=self.keep_prob,
+        conv_layer5 = ConvLayer(input_shape=(None, int(self.image_size/4), int(self.image_size/4), 128),
+                                n_size=3, n_filters=256, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv5')
+        conv_layer6 = ConvLayer(input_shape=(None, int(self.image_size / 4), int(self.image_size / 4), 256),
+                                n_size=3, n_filters=256, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv6')
+        conv_layer7 = ConvLayer(input_shape=(None, int(self.image_size / 4), int(self.image_size / 4), 256),
+                                n_size=3, n_filters=256, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv7')
+        conv_layer8 = ConvLayer(input_shape=(None, int(self.image_size / 4), int(self.image_size / 4), 256),
+                                n_size=3, n_filters=256, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv8')
+        pool_layer3 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool3')
+
+        conv_layer9 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 256),
+                                n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv9')
+        conv_layer10 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 512),
+                                n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv10')
+        conv_layer11 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 512),
+                                n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv11')
+        conv_layer12 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 512),
+                                n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                weight_decay=self.weight_decay, name='conv12')
+        pool_layer4 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool4')
+
+        conv_layer13 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
+                                 n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                 weight_decay=self.weight_decay, name='conv13')
+        conv_layer14 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
+                                 n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                 weight_decay=self.weight_decay, name='conv14')
+        conv_layer15 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
+                                 n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                 weight_decay=self.weight_decay, name='conv15')
+        conv_layer16 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
+                                 n_size=3, n_filters=512, stride=2, activation='relu', batch_normal=self.batch_normal,
+                                 weight_decay=self.weight_decay, name='conv16')
+        pool_layer5 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool5')
+
+        dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/32)*int(self.image_size/32)*512),
+                                  hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense1')
+        dense_layer2 = DenseLayer(input_shape=(None, 4096),
+                                  hidden_dim=2048, activation='relu', dropout=True, keep_prob=self.keep_prob,
+                                  batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense2')
 
-        dense_layer2 = DenseLayer(input_shape=(None, 1024),
+        dense_layer3 = DenseLayer(input_shape=(None, 2048),
                                   hidden_dim=self.n_classes, activation='none', dropout=False, keep_prob=None,
-                                  batch_normal=False, weight_decay=self.weight_decay, name='dense2')
+                                  batch_normal=False, weight_decay=self.weight_decay, name='dense3')
 
         # data flow
         hidden_conv1 = conv_layer1.get_output(input=self.images)
-        hidden_pool1 = pool_layer1.get_output(input=hidden_conv1)
-        hidden_conv2 = conv_layer2.get_output(input=hidden_pool1)
-        hidden_pool2 = pool_layer2.get_output(input=hidden_conv2)
-        hidden_conv3 = conv_layer3.get_output(input=hidden_pool2)
-        hidden_pool3 = pool_layer3.get_output(input=hidden_conv3)
-        hidden_conv4 = conv_layer4.get_output(input=hidden_pool3)
-        hidden_pool4 = pool_layer4.get_output(input=hidden_conv4)
+        hidden_conv2 = conv_layer2.get_output(hidden_conv1)
+        hidden_pool1 = pool_layer1.get_output(hidden_conv2)
 
-        input_dense1 = tf.reshape(hidden_pool4, shape=[-1, int(self.image_size/256)*int(self.image_size/256)*512])
+        hidden_conv3 = conv_layer3.get_output(hidden_pool1)
+        hidden_conv4 = conv_layer4.get_output(hidden_conv3)
+        hidden_pool2 = pool_layer2.get_output(hidden_conv4)
+
+        hidden_conv5 = conv_layer5.get_output(hidden_pool2)
+        hidden_conv6 = conv_layer6.get_output(hidden_conv5)
+        hidden_conv7 = conv_layer7.get_output(hidden_conv6)
+        hidden_conv8 = conv_layer8.get_output(hidden_conv7)
+        hidden_pool3 = pool_layer3.get_output(hidden_conv8)
+
+        hidden_conv9 = conv_layer9.get_output(hidden_pool3)
+        hidden_conv10 = conv_layer10.get_output(hidden_conv9)
+        hidden_conv11 = conv_layer11.get_output(hidden_conv10)
+        hidden_conv12 = conv_layer12.get_output(hidden_conv11)
+        hidden_pool4 = pool_layer4.get_output(hidden_conv12)
+
+        hidden_conv13 = conv_layer13.get_output(hidden_pool4)
+        hidden_conv14 = conv_layer14.get_output(hidden_conv13)
+        hidden_conv15 = conv_layer15.get_output(hidden_conv14)
+        hidden_conv16 = conv_layer16.get_output(hidden_conv15)
+        hidden_pool5 = pool_layer5.get_output(hidden_conv16)
+
+        input_dense1 = tf.reshape(hidden_pool5, shape=[-1, int(self.image_size/32)*int(self.image_size/32)*512])
         output_dense1 = dense_layer1.get_output(input=input_dense1)
-        logits = dense_layer2.get_output(input=output_dense1)
+        output_dense2 = dense_layer2.get_output(output_dense1)
+        output_dense3 = dense_layer3.get_output(output_dense2)
+        logits = dense_layer2.get_output(input=output_dense3)
 
         # cross entropy object function
         self.objective = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(
@@ -113,9 +173,13 @@ class ConvNet(object):
             raise NotImplementedError("unsupported optimizer: {}".format(self.optim))
         self.train_op = self.optimizer.minimize(self.avg_loss, global_step=self.global_step)
 
-        # prediction
-        correct_prediction = tf.equal(self.labels, tf.argmax(logits, axis=1))
-        self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, dtype='float'))
+        # prediction(如果前三个命中则为正确)
+        correct_prediction_top3 = tf.nn.in_top_k(logits, self.labels, k=3)
+        # correct_prediction = tf.equal(self.labels, tf.argmax(logits, axis=1))
+        self.accuracy_top3 = tf.reduce_mean(tf.cast(correct_prediction_top3, dtype='float'))
+
+        correct_prediction_top1 = tf.nn.in_top_k(logits, self.labels, k=1)
+        self.accuracy_top1 = tf.reduce_mean(tf.cast(correct_prediction_top1, dtype='float'))
 
         self.logger.info('Build the network done....')
 
@@ -139,7 +203,6 @@ class ConvNet(object):
         best_dev_accuracy = 0.0
         for epoch in range(0, n_epoch+1):
             # load data and data augmentation
-            self.logger.info("begin data augmentation.....")
             train_images = dataloader.data_augmentation(dataloader.train_images, mode='train',
                                                         flip=False, crop=False, whiten=False,
                                                         noise=False)
@@ -148,7 +211,6 @@ class ConvNet(object):
                                                         flip=False, crop=False, whiten=False,
                                                         noise=False)
             valid_labels = dataloader.valid_labels
-            self.logger.info("data augmentation done.")
             # print("compute train loss....")
             train_loss = 0.0
             for i in range(0, dataloader.n_train, batch_size):
@@ -163,32 +225,36 @@ class ConvNet(object):
 
             # get the loss and accuracy of the valid dataset
             # print("get the loss and accuracy of the valid dataset on epoch %d......" % epoch)
-            valid_accuracy, valid_loss = 0.0, 0.0
+            valid_accuracy_top1, valid_accuracy_top3, valid_loss = 0.0, 0.0, 0.0
             for i in range(0, dataloader.n_valid, batch_size):
                 batch_images = valid_images[i: i+batch_size]
                 batch_labels = valid_labels[i: i+batch_size]
-                [avg_accuracy, avg_loss] = self.sess.run(
-                    fetches=[self.accuracy, self.avg_loss],
+                [avg_accuracy_top1, avg_accuracy_top3, avg_loss] = self.sess.run(
+                    fetches=[self.accuracy_top1, self.accuracy_top3,  self.avg_loss],
                     feed_dict={
                         self.images: batch_images,
                         self.labels: batch_labels,
                         self.keep_prob: 1.0
                     }
                 )
-                valid_accuracy += avg_accuracy * batch_images.shape[0]
+                valid_accuracy_top1 += avg_accuracy_top1 * batch_images.shape[0]
+                valid_accuracy_top3 += avg_accuracy_top3 * batch_images.shape[0]
                 valid_loss += avg_loss * batch_images.shape[0]
-            valid_accuracy = 1.0 * valid_accuracy / dataloader.n_valid
+            valid_accuracy_top1 = 1.0 * valid_accuracy_top1 / dataloader.n_valid
+            valid_accuracy_top3 = 1.0 * valid_accuracy_top3 / dataloader.n_valid
             valid_loss = 1.0 * valid_loss / dataloader.n_valid
 
-            self.logger.info("epoch{%d}, iter[%d], train loss: %.6f, valid precision: %.6f, "
-                             "valid loss: %.6f" % (epoch, iteration, train_loss, valid_accuracy, valid_loss))
+            self.logger.info("epoch{%d}, iter[%d], train loss: %.6f, valid precision top1: %.6f,"
+                             " valid precision top3: %.6f, valid loss: %.6f" % (epoch, iteration, train_loss,
+                                                                                valid_accuracy_top1, valid_accuracy_top3,
+                                                                                valid_loss))
             sys.stdout.flush()
 
             # save the best model
-            if valid_accuracy > best_dev_accuracy:
+            if valid_accuracy_top3 > best_dev_accuracy:
                 saver_path = self.saver.save(self.sess, os.path.join(backup_path, 'model_%d.ckpt' % epoch))
-                best_dev_accuracy = valid_accuracy
-                self.logger.info("saved the best model of valid precision: %.6f" % valid_accuracy)
+                best_dev_accuracy = valid_accuracy_top3
+                self.logger.info("saved the best model of valid precision: %.6f" % valid_accuracy_top3)
 
         self.sess.close()
 
@@ -205,8 +271,8 @@ class ConvNet(object):
 
         # test the model
         accuarcy_list = []
-        test_images = dataloader.data_augmentation(dataloader.test_images, flip=False, crop=True,
-                                                   crop_shape=(24, 24, 3), whiten=True, noise=False)
+        test_images = dataloader.data_augmentation(dataloader.test_images,
+                                                   flip=False, crop=True, whiten=True, noise=False)
         test_labels = dataloader.test_labels
         for i in range(0, dataloader.n_test, batch_size):
             batch_images = test_images[i: i+batch_size]
