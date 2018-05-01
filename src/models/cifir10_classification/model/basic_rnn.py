@@ -72,14 +72,17 @@ class ConvNet(object):
         dense_layer2 = DenseLayer(input_shape=(None, 4096),
                                   hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense2')
-        dense_layer3 = DenseLayer(input_shape=(None, 1000),
+        dense_layer3 = DenseLayer(input_shape=(None, 4096),
+                                  hidden_dim=1000, activation='relu', dropout=True, keep_prob=self.keep_prob,
+                                  batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense3')
+        dense_layer4 = DenseLayer(input_shape=(None, 1000),
                                   hidden_dim=self.n_classes, activation='none', dropout=False, keep_prob=None,
-                                  batch_normal=False, weight_decay=self.weight_decay, name='dense3')
+                                  batch_normal=False, weight_decay=self.weight_decay, name='dense4')
 
         # data flow
         # print("self.images shape {}", format(self.images.shape))
         hidden_conv1 = conv_layer1.get_output(input=self.images)
-        print("hidden_conv1 result shape {}".format(hidden_conv1.shape))  # 112 x 112 x 64
+        print("hidden_conv1 result shape {}".format(hidden_conv1.shape))
         hidden_pool1 = pool_layer1.get_output(hidden_conv1)
         print("hidden_pool1 result shape {}".format(hidden_pool1.shape))
 
@@ -98,7 +101,8 @@ class ConvNet(object):
         input_dense1 = tf.reshape(hidden_pool5, shape=[-1, int(self.image_size/32)*int(self.image_size/32)*512])
         output_dense1 = dense_layer1.get_output(input=input_dense1)
         output_dense2 = dense_layer2.get_output(input=output_dense1)
-        logits = dense_layer3.get_output(input=output_dense2)
+        output_dense3 = dense_layer3.get_output(input=output_dense2)
+        logits = dense_layer4.get_output(input=output_dense3)
 
         # cross entropy object function
         self.objective = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(
