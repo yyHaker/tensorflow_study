@@ -99,19 +99,21 @@ class ConvNet(object):
                                  weight_decay=self.weight_decay, name='conv16')
         pool_layer5 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool5')
 
+        # 8192 ->
         dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/32)*int(self.image_size/32)*512),
                                   hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense1')
         dense_layer2 = DenseLayer(input_shape=(None, 4096),
                                   hidden_dim=2048, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense2')
-
         dense_layer3 = DenseLayer(input_shape=(None, 2048),
                                   hidden_dim=self.n_classes, activation='none', dropout=False, keep_prob=None,
                                   batch_normal=False, weight_decay=self.weight_decay, name='dense3')
 
         # data flow
+        self.logger.info("self.images shape {}", format(self.images.shape))
         hidden_conv1 = conv_layer1.get_output(input=self.images)
+        self.logger.info("self.hidden_conv1 result shape {}".format(hidden_conv1))
         hidden_conv2 = conv_layer2.get_output(hidden_conv1)
         hidden_pool1 = pool_layer1.get_output(hidden_conv2)
 
