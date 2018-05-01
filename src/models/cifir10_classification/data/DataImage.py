@@ -100,12 +100,12 @@ class DataImage(object):
             class_id = self.imgname_to_classid[image_name]
             label_name = self.id_to_class[class_id]
             images_labels.append((real, class_id))
-            cv2.namedWindow(label_name)
-            cv2.imshow(label_name, real)
-            cv2.waitKey(0)
-            if count % 5 == 0:
-                cv2.destroyAllWindows()
-        cv2.destroyAllWindows()
+            # cv2.namedWindow(label_name)
+            # cv2.imshow(label_name, real)
+            # cv2.waitKey(0)
+            # if count % 5 == 0:
+                # cv2.destroyAllWindows()
+        # cv2.destroyAllWindows()
         self.logger.info("total read images and labels: {}".format(count))
         # conver to numpy array
         self.images_labels = np.array(images_labels)
