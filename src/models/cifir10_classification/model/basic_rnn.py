@@ -139,9 +139,8 @@ class ConvNet(object):
 
         input_dense1 = tf.reshape(hidden_pool5, shape=[-1, int(self.image_size/32)*int(self.image_size/32)*512])
         output_dense1 = dense_layer1.get_output(input=input_dense1)
-        output_dense2 = dense_layer2.get_output(output_dense1)
-        output_dense3 = dense_layer3.get_output(output_dense2)
-        logits = dense_layer2.get_output(input=output_dense3)
+        output_dense2 = dense_layer2.get_output(input=output_dense1)
+        logits = dense_layer3.get_output(input=output_dense2)
 
         # cross entropy object function
         self.objective = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(
