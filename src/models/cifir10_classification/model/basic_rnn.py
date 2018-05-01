@@ -44,69 +44,35 @@ class ConvNet(object):
         conv_layer1 = ConvLayer(input_shape=(None, self.image_size, self.image_size, self.n_channels),
                                 n_size=3, n_filters=64, stride=1, activation='relu', batch_normal=self.batch_normal,
                                 weight_decay=self.weight_decay, name='conv1')
-        conv_layer2 = ConvLayer(input_shape=(None, self.image_size, self.image_size, 64),
-                                n_size=3, n_filters=64, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv2')
         pool_layer1 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool1')
 
-        conv_layer3 = ConvLayer(input_shape=(None, int(self.image_size/2), int(self.image_size/2), 64),
+        conv_layer2 = ConvLayer(input_shape=(None, int(self.image_size/2), int(self.image_size/2), 64),
                                 n_size=3, n_filters=128, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv3')
-        conv_layer4 = ConvLayer(input_shape=(None, int(self.image_size / 2), int(self.image_size / 2), 128),
-                                n_size=3, n_filters=128, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv4')
+                                weight_decay=self.weight_decay, name='conv2')
         pool_layer2 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool2')
 
-        conv_layer5 = ConvLayer(input_shape=(None, int(self.image_size/4), int(self.image_size/4), 128),
+        conv_layer3 = ConvLayer(input_shape=(None, int(self.image_size/4), int(self.image_size/4), 128),
                                 n_size=3, n_filters=256, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv5')
-        conv_layer6 = ConvLayer(input_shape=(None, int(self.image_size / 4), int(self.image_size / 4), 256),
-                                n_size=3, n_filters=256, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv6')
-        conv_layer7 = ConvLayer(input_shape=(None, int(self.image_size / 4), int(self.image_size / 4), 256),
-                                n_size=3, n_filters=256, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv7')
-        conv_layer8 = ConvLayer(input_shape=(None, int(self.image_size / 4), int(self.image_size / 4), 256),
-                                n_size=3, n_filters=256, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv8')
+                                weight_decay=self.weight_decay, name='conv3')
         pool_layer3 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool3')
 
-        conv_layer9 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 256),
+        conv_layer4 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 256),
                                 n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv9')
-        conv_layer10 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 512),
-                                n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv10')
-        conv_layer11 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 512),
-                                n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv11')
-        conv_layer12 = ConvLayer(input_shape=(None, int(self.image_size / 8), int(self.image_size / 8), 512),
-                                n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                weight_decay=self.weight_decay, name='conv12')
+                                weight_decay=self.weight_decay, name='conv4')
         pool_layer4 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool4')
 
-        conv_layer13 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
+        conv_layer5 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
                                  n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                 weight_decay=self.weight_decay, name='conv13')
-        conv_layer14 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
-                                 n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                 weight_decay=self.weight_decay, name='conv14')
-        conv_layer15 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
-                                 n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                 weight_decay=self.weight_decay, name='conv15')
-        conv_layer16 = ConvLayer(input_shape=(None, int(self.image_size / 16), int(self.image_size / 16), 512),
-                                 n_size=3, n_filters=512, stride=1, activation='relu', batch_normal=self.batch_normal,
-                                 weight_decay=self.weight_decay, name='conv16')
+                                 weight_decay=self.weight_decay, name='conv5')
         pool_layer5 = PoolLayer(n_size=2, stride=2, mode='max', resp_normal=self.resp_normal, name='pool5')
 
-        # 8192 ->
         dense_layer1 = DenseLayer(input_shape=(None, int(self.image_size/32)*int(self.image_size/32)*512),
                                   hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense1')
         dense_layer2 = DenseLayer(input_shape=(None, 4096),
-                                  hidden_dim=2048, activation='relu', dropout=True, keep_prob=self.keep_prob,
+                                  hidden_dim=4096, activation='relu', dropout=True, keep_prob=self.keep_prob,
                                   batch_normal=self.batch_normal, weight_decay=self.weight_decay, name='dense2')
-        dense_layer3 = DenseLayer(input_shape=(None, 2048),
+        dense_layer3 = DenseLayer(input_shape=(None, 1000),
                                   hidden_dim=self.n_classes, activation='none', dropout=False, keep_prob=None,
                                   batch_normal=False, weight_decay=self.weight_decay, name='dense3')
 
@@ -114,32 +80,20 @@ class ConvNet(object):
         # print("self.images shape {}", format(self.images.shape))
         hidden_conv1 = conv_layer1.get_output(input=self.images)
         print("hidden_conv1 result shape {}".format(hidden_conv1.shape))  # 112 x 112 x 64
-        hidden_conv2 = conv_layer2.get_output(hidden_conv1)
-        print("hidden_conv2 result shape {}".format(hidden_conv2.shape))
-        hidden_pool1 = pool_layer1.get_output(hidden_conv2)
+        hidden_pool1 = pool_layer1.get_output(hidden_conv1)
         print("hidden_pool1 result shape {}".format(hidden_pool1.shape))
 
-        hidden_conv3 = conv_layer3.get_output(hidden_pool1)
-        hidden_conv4 = conv_layer4.get_output(hidden_conv3)
-        hidden_pool2 = pool_layer2.get_output(hidden_conv4)
+        hidden_conv2 = conv_layer2.get_output(hidden_pool1)
+        hidden_pool2 = pool_layer2.get_output(hidden_conv2)
 
-        hidden_conv5 = conv_layer5.get_output(hidden_pool2)
-        hidden_conv6 = conv_layer6.get_output(hidden_conv5)
-        hidden_conv7 = conv_layer7.get_output(hidden_conv6)
-        hidden_conv8 = conv_layer8.get_output(hidden_conv7)
-        hidden_pool3 = pool_layer3.get_output(hidden_conv8)
+        hidden_conv3 = conv_layer3.get_output(hidden_pool2)
+        hidden_pool3 = pool_layer3.get_output(hidden_conv3)
 
-        hidden_conv9 = conv_layer9.get_output(hidden_pool3)
-        hidden_conv10 = conv_layer10.get_output(hidden_conv9)
-        hidden_conv11 = conv_layer11.get_output(hidden_conv10)
-        hidden_conv12 = conv_layer12.get_output(hidden_conv11)
-        hidden_pool4 = pool_layer4.get_output(hidden_conv12)
+        hidden_conv4 = conv_layer4.get_output(hidden_pool3)
+        hidden_pool4 = pool_layer4.get_output(hidden_conv4)
 
-        hidden_conv13 = conv_layer13.get_output(hidden_pool4)
-        hidden_conv14 = conv_layer14.get_output(hidden_conv13)
-        hidden_conv15 = conv_layer15.get_output(hidden_conv14)
-        hidden_conv16 = conv_layer16.get_output(hidden_conv15)
-        hidden_pool5 = pool_layer5.get_output(hidden_conv16)
+        hidden_conv5 = conv_layer5.get_output(hidden_pool4)
+        hidden_pool5 = pool_layer5.get_output(hidden_conv5)
 
         input_dense1 = tf.reshape(hidden_pool5, shape=[-1, int(self.image_size/32)*int(self.image_size/32)*512])
         output_dense1 = dense_layer1.get_output(input=input_dense1)
