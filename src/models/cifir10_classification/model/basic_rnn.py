@@ -111,9 +111,9 @@ class ConvNet(object):
                                   batch_normal=False, weight_decay=self.weight_decay, name='dense3')
 
         # data flow
-        self.logger.info("self.images shape {}", format(self.images.shape))
+        # print("self.images shape {}", format(self.images.shape))
         hidden_conv1 = conv_layer1.get_output(input=self.images)
-        self.logger.info("self.hidden_conv1 result shape {}".format(hidden_conv1))
+        print("self.hidden_conv1 result shape {}".format(hidden_conv1.shape))
         hidden_conv2 = conv_layer2.get_output(hidden_conv1)
         hidden_pool1 = pool_layer1.get_output(hidden_conv2)
 
